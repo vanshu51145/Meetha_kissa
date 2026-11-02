@@ -96,7 +96,7 @@ export default function Home() {
             />
             <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-gold/30 shadow-[0_40px_90px_-40px_rgba(76,16,25,0.55)] sm:aspect-[4/4.6]">
               <Image
-                src="https://images.pexels.com/photos/8887018/pexels-photo-8887018.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                src="/home-hero.jpg"
                 alt="Hands lifting a saffron ladoo from a brass bowl surrounded by festive flowers"
                 fill
                 priority
@@ -224,7 +224,7 @@ export default function Home() {
           <div className="grid overflow-hidden rounded-[2rem] border border-gold/25 bg-wine text-cream lg:grid-cols-2">
             <div className="relative order-2 min-h-[18rem] lg:order-1 lg:min-h-[30rem]">
               <Image
-                src="https://images.pexels.com/photos/11484120/pexels-photo-11484120.jpeg?auto=compress&cs=tinysrgb&w=1400"
+                src="/home-gift-box.jpg"
                 alt="Overhead view of a gift box filled with barfi, sandesh, cham cham and ladoo"
                 fill
                 sizes="(max-width: 1024px) 100vw, 640px"
@@ -295,7 +295,7 @@ export default function Home() {
           <Reveal className="relative">
             <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-gold/30 shadow-[0_40px_80px_-45px_rgba(76,16,25,0.6)]">
               <Image
-                src="https://images.pexels.com/photos/35069424/pexels-photo-35069424.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                src="/home-halwai.jpg"
                 alt="A halwai frying fresh boondi in a large kadhai, the traditional way"
                 fill
                 sizes="(max-width: 1024px) 100vw, 560px"
