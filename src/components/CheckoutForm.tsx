@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { Check, Loader2, Lock, ShoppingBag } from "lucide-react";
 import { useCart } from "@/lib/cart";
@@ -8,7 +8,7 @@ import { deliveryFor, FREE_DELIVERY_OVER, type CheckoutPayment, type Customer } 
 import { inr } from "@/lib/products";
 import { placeOrder, startPayment } from "@/app/checkout/actions";
 
-type Props = { onlinePayment: boolean };
+type Props = { razorpayEnabled: boolean };
 
 const empty: Customer = {
   name: "",
@@ -92,21 +92,47 @@ function Field({
   );
 }
 
-export default function CheckoutForm({ onlinePayment }: Props) {
+export default function CheckoutForm({ razorpayEnabled }: Props) {
   const { items, subtotal, count, clear } = useCart();
   const [customer, setCustomer] = useState(empty);
-  const [method, setMethod] = useState<"cod" | "razorpay">("cod");
+  const [method, setMethod] = useState<"cod" | "online">("cod");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [placed, setPlaced] = useState<{ id: string; total: number; method: "cod" | "razorpay" } | null>(
-    null,
-  );
+  const [sheet, setSheet] = useState<{
+    orderId: string;
+    amount: number;
+    signature: string;
+  } | null>(null);
+  const [placed, setPlaced] = useState<{
+    id: string;
+    total: number;
+    method: "cod" | "demo" | "razorpay";
+  } | null>(null);
 
   const delivery = deliveryFor(subtotal);
   const total = subtotal + delivery;
   const update = (field: keyof Customer, value: string) =>
     setCustomer((current) => ({ ...current, [field]: value }));
   const lineItems = items.map(({ slug, qty }) => ({ slug, qty }));
+
+  // The sandbox sheet behaves like a gateway modal: it holds the page until paid or dismissed.
+  useEffect(() => {
+    if (!sheet) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSheet(null);
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [sheet]);
+
+  const pay = (payment: { orderId: string; signature: string }) => {
+    setSheet(null);
+    void confirm({ method: "demo", orderId: payment.orderId, signature: payment.signature });
+  };
 
   async function confirm(payment: CheckoutPayment): Promise<void> {
     setBusy(true);
@@ -130,7 +156,7 @@ export default function CheckoutForm({ onlinePayment }: Props) {
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (busy || placed) return;
+    if (busy || placed || sheet) return;
     if (method === "cod") {
       await confirm({ method: "cod" });
       return;
@@ -142,6 +168,10 @@ export default function CheckoutForm({ onlinePayment }: Props) {
       const start = await startPayment(lineItems);
       if (!start.ok) {
         setError(start.error);
+        return;
+      }
+      if (start.mode === "demo") {
+        setSheet({ orderId: start.orderId, amount: start.amount, signature: start.signature });
         return;
       }
       await loadRazorpay();
@@ -190,7 +220,9 @@ export default function CheckoutForm({ onlinePayment }: Props) {
         <p className="text-sm text-ink/60">
           {placed.method === "cod"
             ? "Keep the exact amount ready — you pay when the box arrives."
-            : "Paid online — your receipt is on its way to your inbox."}
+            : placed.method === "demo"
+              ? "This was a test payment — no money moved, and the order is flagged as sandbox in our records."
+              : "Paid online — your receipt is on its way to your inbox."}
         </p>
         <div className="mt-3 flex gap-3">
           <Link
@@ -329,31 +361,32 @@ export default function CheckoutForm({ onlinePayment }: Props) {
                   </span>
                 </span>
               </label>
-              {onlinePayment && (
-                <label
-                  className={`flex cursor-pointer items-start gap-3 rounded-xl border p-4 transition-colors ${
-                    method === "razorpay"
-                      ? "border-gold bg-gold/5"
-                      : "border-wine/15 hover:border-wine/40"
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="payment"
-                    checked={method === "razorpay"}
-                    onChange={() => setMethod("razorpay")}
-                    className="mt-1 accent-[#4c1019]"
-                  />
-                  <span>
-                    <span className="flex items-center gap-2 text-sm font-medium text-wine">
-                      Pay now <Lock className="h-3.5 w-3.5 text-gold" />
-                    </span>
-                    <span className="mt-0.5 block text-sm text-ink/60">
-                      UPI, cards and netbanking — secured by Razorpay.
-                    </span>
+              <label
+                className={`flex cursor-pointer items-start gap-3 rounded-xl border p-4 transition-colors ${
+                  method === "online"
+                    ? "border-gold bg-gold/5"
+                    : "border-wine/15 hover:border-wine/40"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="payment"
+                  checked={method === "online"}
+                  onChange={() => setMethod("online")}
+                  className="mt-1 accent-[#4c1019]"
+                />
+                <span>
+                  <span className="flex items-center gap-2 text-sm font-medium text-wine">
+                    {razorpayEnabled ? "Pay now" : "Pay now (test)"}
+                    <Lock className="h-3.5 w-3.5 text-gold" />
                   </span>
-                </label>
-              )}
+                  <span className="mt-0.5 block text-sm text-ink/60">
+                    {razorpayEnabled
+                      ? "UPI, cards and netbanking — secured by Razorpay."
+                      : "Simulated gateway for this demo — no money moves. Add Razorpay keys to go live."}
+                  </span>
+                </span>
+              </label>
             </div>
           </fieldset>
 
@@ -414,6 +447,54 @@ export default function CheckoutForm({ onlinePayment }: Props) {
           )}
         </aside>
       </div>
+
+      {sheet && (
+        <div
+          className="fixed inset-0 z-[80] grid place-items-center bg-wine-dark/60 p-4 backdrop-blur-sm"
+          onClick={() => setSheet(null)}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Test payment"
+            onClick={(event) => event.stopPropagation()}
+            className="w-full max-w-sm rounded-2xl border border-gold/40 bg-cream p-6 shadow-2xl"
+          >
+            <div className="flex items-center justify-between">
+              <span className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-ink/50">
+                <Lock className="h-3.5 w-3.5 text-gold" /> Test payment
+              </span>
+              <span className="rounded-full bg-gold/15 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-gold">
+                Sandbox
+              </span>
+            </div>
+            <p className="mt-5 font-serif text-3xl text-wine">{inr(sheet.amount / 100)}</p>
+            <p className="mt-1 text-sm text-ink/60">Meetha Kissa · ref {sheet.orderId}</p>
+            <div className="mt-5 rounded-xl border border-wine/15 bg-white/60 px-4 py-3 text-sm text-ink/70">
+              Test card · 4111 1111 1111 1111
+              <span className="mt-1 block text-xs text-ink/45">
+                This gateway is a simulation — no money moves.
+              </span>
+            </div>
+            <div className="mt-6 flex gap-3">
+              <button
+                type="button"
+                onClick={() => pay(sheet)}
+                className="flex-1 rounded-full bg-wine py-3.5 text-sm font-medium text-cream transition-colors hover:bg-wine-soft"
+              >
+                Pay {inr(sheet.amount / 100)}
+              </button>
+              <button
+                type="button"
+                onClick={() => setSheet(null)}
+                className="rounded-full border border-wine/25 px-6 text-sm font-medium text-wine transition-colors hover:bg-wine/5"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

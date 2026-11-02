@@ -32,8 +32,11 @@ Orders, enquiries and subscribers are JSON files written by `src/lib/store.ts`.
 
 ## Payments
 
-- **Pay on Delivery** works with no configuration.
-- **Pay online** — copy `.env.example` to `.env.local` and add Razorpay test keys. The "Pay now" option then appears at checkout. The server creates the Razorpay order, then verifies both the payment signature and the paid amount against the catalogue before an order is saved — prices are never trusted from the browser.
+Three ways to pay at checkout, nothing to configure first:
+
+- **Pay on Delivery** — cash or UPI when the box arrives.
+- **Pay now (test)** — a sandbox gateway for demos. `startPayment` issues an HMAC token over the reference and the catalogue total; `placeOrder` re-derives the total and checks it, so a box edited after "paying" can't be saved at the old price. Those orders are stored as `demo_paid`.
+- **Pay now (Razorpay)** — appears on its own the moment `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET` are in `.env.local` (copy `.env.example`). The server creates the Razorpay order, then verifies the payment signature *and* fetches the paid amount from Razorpay before an order is saved. Prices are never trusted from the browser.
 
 ## Images
 

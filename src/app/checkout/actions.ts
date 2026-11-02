@@ -22,13 +22,27 @@ const razorpayAuth = () =>
 const VERIFY_ERROR =
   "We couldn't verify that payment. Please try again, or choose cash on delivery.";
 
-/** Creates a Razorpay order for the box total. Amount comes from the catalogue, never the client. */
+// Demo (sandbox) payments are signed with a stable secret so the token issued by
+// startPayment can be checked by placeOrder — even across server restarts.
+// No money is involved; adding RAZORPAY_KEY_SECRET switches to the real gateway.
+const DEMO_SECRET = process.env.RAZORPAY_KEY_SECRET ?? "meetha-kissa-demo-payment-secret";
+
+const sign = (orderId: string, paise: number) =>
+  createHmac("sha256", DEMO_SECRET).update(`${orderId}|${paise}`).digest("hex");
+
+const newOrderId = () =>
+  `MK-${Date.now().toString(36).toUpperCase()}-${randomBytes(2).toString("hex").toUpperCase()}`;
+
+/** Creates the payment: a real Razorpay order when keys exist, otherwise a signed sandbox one. */
 export async function startPayment(items: CheckoutItem[]): Promise<StartPaymentResult> {
-  if (!checkoutEnabled()) {
-    return { ok: false, error: "Online payment is not configured yet." };
-  }
   const priced = priceItems(items);
   if (!priced.ok) return priced;
+
+  if (!checkoutEnabled()) {
+    const reference = newOrderId();
+    const amount = priced.total * 100;
+    return { ok: true, mode: "demo", orderId: reference, amount, signature: sign(reference, amount) };
+  }
 
   try {
     const response = await fetch("https://api.razorpay.com/v1/orders", {
@@ -43,7 +57,13 @@ export async function startPayment(items: CheckoutItem[]): Promise<StartPaymentR
     });
     if (!response.ok) throw new Error(`razorpay ${response.status}`);
     const order = (await response.json()) as { id: string; amount: number };
-    return { ok: true, orderId: order.id, amount: order.amount, keyId: process.env.RAZORPAY_KEY_ID! };
+    return {
+      ok: true,
+      mode: "razorpay",
+      orderId: order.id,
+      amount: order.amount,
+      keyId: process.env.RAZORPAY_KEY_ID!,
+    };
   } catch (error) {
     console.error("startPayment failed", error);
     return { ok: false, error: "We couldn't start the payment. Please try again, or choose cash on delivery." };
@@ -82,6 +102,20 @@ async function verifyPayment(
   return null;
 }
 
+// Sandbox payments are signed by startPayment over the reference and the exact
+// catalogue total, so a box edited after "paying" can't be saved at the old price.
+function verifyDemoPayment(
+  payment: Extract<CheckoutPayment, { method: "demo" }>,
+  total: number,
+): string | null {
+  if (!/^MK-[A-Z0-9]+-[A-Z0-9]+$/.test(String(payment.orderId))) return VERIFY_ERROR;
+  const expected = sign(payment.orderId, total * 100);
+  const a = Buffer.from(expected);
+  const b = Buffer.from(String(payment.signature));
+  if (a.length !== b.length || !timingSafeEqual(a, b)) return VERIFY_ERROR;
+  return null;
+}
+
 export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResult> {
   const priced = priceItems(input?.items);
   if (!priced.ok) return priced;
@@ -90,24 +124,31 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   if (addressProblem) return { ok: false, error: addressProblem };
 
   const payment = input?.payment;
-  if (!payment || (payment.method !== "cod" && payment.method !== "razorpay")) {
+  if (!payment || (payment.method !== "cod" && payment.method !== "demo" && payment.method !== "razorpay")) {
     return { ok: false, error: "Please choose how you'd like to pay." };
+  }
+  if (payment.method === "demo") {
+    const problem = verifyDemoPayment(payment, priced.total);
+    if (problem) return { ok: false, error: problem };
   }
   if (payment.method === "razorpay") {
     const problem = await verifyPayment(payment, priced.total);
     if (problem) return { ok: false, error: problem };
   }
 
-  const id = `MK-${Date.now().toString(36).toUpperCase()}-${randomBytes(2).toString("hex").toUpperCase()}`;
+  const id = newOrderId();
   try {
     await append("orders.json", {
       id,
       createdAt: new Date().toISOString(),
-      status: payment.method === "cod" ? "cod_pending" : "paid",
+      status:
+        payment.method === "cod" ? "cod_pending" : payment.method === "demo" ? "demo_paid" : "paid",
       payment:
         payment.method === "cod"
           ? { method: "cod" }
-          : { method: "razorpay", orderId: payment.orderId, paymentId: payment.paymentId },
+          : payment.method === "demo"
+            ? { method: "demo", reference: payment.orderId }
+            : { method: "razorpay", orderId: payment.orderId, paymentId: payment.paymentId },
       customer: cleanCustomer(input.customer),
       items: priced.items,
       subtotal: priced.subtotal,

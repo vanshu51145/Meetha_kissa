@@ -7,6 +7,7 @@ import { after, before, test } from "node:test";
 // The order store writes to <cwd>/data, so chdir into a temp dir before placing orders.
 const cwd = process.cwd();
 let placeOrder: typeof import("../src/app/checkout/actions.ts")["placeOrder"];
+let startPayment: typeof import("../src/app/checkout/actions.ts")["startPayment"];
 let dir: string;
 
 const customer = {
@@ -22,7 +23,7 @@ const customer = {
 before(async () => {
   dir = await mkdtemp(path.join(tmpdir(), "meetha-kissa-order-"));
   process.chdir(dir);
-  ({ placeOrder } = await import("../src/app/checkout/actions.ts"));
+  ({ placeOrder, startPayment } = await import("../src/app/checkout/actions.ts"));
 });
 
 after(async () => {
@@ -93,4 +94,40 @@ test("an unverified online payment is refused", async () => {
 
   const orders = JSON.parse(await readFile(path.join(dir, "data", "orders.json"), "utf8"));
   assert.equal(orders.length, 2, "refused payments must not be saved");
+});
+
+test("a sandbox payment is signed against the box total", async () => {
+  const start = await startPayment([{ slug: "kaju-katli", qty: 1 }]);
+  assert.ok(start.ok, JSON.stringify(start));
+  if (!start.ok) return;
+  assert.equal(start.mode, "demo", "no Razorpay keys are configured in tests");
+  assert.equal(start.amount, 650 * 100 + 79 * 100); // subtotal + delivery, in paise
+
+  const paid = await placeOrder({
+    items: [{ slug: "kaju-katli", qty: 1 }],
+    customer,
+    payment: { method: "demo", orderId: start.orderId, signature: start.signature },
+  });
+  assert.ok(paid.ok, JSON.stringify(paid));
+
+  // Paying, then swapping in a bigger box, must not go through at the signed price.
+  const tampered = await placeOrder({
+    items: [{ slug: "kaju-katli", qty: 4 }],
+    customer,
+    payment: { method: "demo", orderId: start.orderId, signature: start.signature },
+  });
+  assert.equal(tampered.ok, false, "signature must cover the amount");
+
+  const forged = await placeOrder({
+    items: [{ slug: "kaju-katli", qty: 1 }],
+    customer,
+    payment: { method: "demo", orderId: start.orderId, signature: "0".repeat(64) },
+  });
+  assert.equal(forged.ok, false, "signature cannot be invented");
+
+  const orders = JSON.parse(await readFile(path.join(dir, "data", "orders.json"), "utf8"));
+  const saved = orders.find((order: { id: string }) => order.id === (paid.ok ? paid.orderId : ""));
+  assert.equal(saved.status, "demo_paid");
+  assert.equal(saved.payment.method, "demo");
+  assert.equal(orders.length, 3, "only the valid sandbox payment is saved");
 });

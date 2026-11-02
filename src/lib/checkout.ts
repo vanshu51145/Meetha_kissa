@@ -17,6 +17,7 @@ export type Customer = {
 
 export type CheckoutPayment =
   | { method: "cod" }
+  | { method: "demo"; orderId: string; signature: string }
   | { method: "razorpay"; orderId: string; paymentId: string; signature: string };
 
 export type PricedItem = {
@@ -38,7 +39,8 @@ export type PlaceOrderResult =
   | { ok: false; error: string };
 
 export type StartPaymentResult =
-  | { ok: true; orderId: string; amount: number; keyId: string }
+  | { ok: true; mode: "razorpay"; orderId: string; amount: number; keyId: string }
+  | { ok: true; mode: "demo"; orderId: string; amount: number; signature: string }
   | { ok: false; error: string };
 
 export type Priced =

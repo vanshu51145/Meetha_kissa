@@ -9,9 +9,9 @@ export const metadata: Metadata = {
 };
 
 export default function CheckoutPage() {
-  const onlinePayment = Boolean(
+  const razorpayEnabled = Boolean(
     process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET,
   );
 
-  return <CheckoutForm onlinePayment={onlinePayment} />;
+  return <CheckoutForm razorpayEnabled={razorpayEnabled} />;
 }
