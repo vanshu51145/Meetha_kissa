@@ -55,7 +55,7 @@ function loadRazorpay(): Promise<void> {
 }
 
 const inputClass =
-  "mt-2 w-full rounded-xl border border-wine/15 bg-cream px-4 py-3 text-sm text-wine placeholder:text-ink/30 focus:border-gold focus:outline-none";
+  "mt-2 w-full rounded-xl border border-[#650D16]/20 bg-white px-4 py-4 text-base text-[#650D16] placeholder:text-[#351B19]/40 focus:border-[#F5C84C] focus:ring-1 focus:ring-[#F5C84C] focus:outline-none transition-all";
 
 function Field({
   label,
@@ -78,7 +78,9 @@ function Field({
 }) {
   return (
     <label className={`block ${className}`}>
-      <span className="text-[11px] uppercase tracking-[0.2em] text-ink/50">{label}</span>
+      <span className="text-[11px] uppercase tracking-[0.2em] text-[#351B19]/60 font-serif">
+        {label}
+      </span>
       <input
         required={required}
         type={type}
@@ -207,33 +209,35 @@ export default function CheckoutForm({ razorpayEnabled }: Props) {
 
   if (placed) {
     return (
-      <div className="mx-auto flex max-w-xl flex-col items-center gap-5 px-4 py-24 text-center sm:px-6">
-        <span className="grid h-16 w-16 place-items-center rounded-full bg-wine text-gold-light">
-          <Check className="h-7 w-7" />
+      <div className="mx-auto flex max-w-xl flex-col items-center gap-6 px-4 sm:px-6 py-28 text-center">
+        <span className="grid h-20 w-20 place-items-center rounded-full bg-[#650D16] text-[#F5C84C]">
+          <Check className="h-8 w-8" />
         </span>
-        <h1 className="font-serif text-4xl text-wine">Your box is on its way</h1>
-        <p className="text-sm leading-relaxed text-ink/65">
-          Order <span className="font-medium text-wine">{placed.id}</span> is confirmed for{" "}
+        <h1 className="font-serif text-4xl text-[#650D16] sm:text-5xl">
+          Your box is on its way
+        </h1>
+        <p className="mt-4 text-lg leading-relaxed text-[#351B19]/70">
+          Order <span className="font-medium text-[#650D16]">{placed.id}</span> is confirmed for{" "}
           {customer.name.split(" ")[0] || "you"} — {inr(placed.total)}. We&apos;ll call{" "}
           {customer.phone}.
         </p>
-        <p className="text-sm text-ink/60">
+        <p className="mt-4 text-base text-[#351B19]/60 leading-relaxed">
           {placed.method === "cod"
             ? "Keep the exact amount ready — you pay when the box arrives."
             : placed.method === "demo"
               ? "This was a test payment — no money moved, and the order is flagged as sandbox in our records."
               : "Paid online — your receipt is on its way to your inbox."}
         </p>
-        <div className="mt-3 flex gap-3">
+        <div className="mt-6 flex gap-4">
           <Link
             href="/sweets"
-            className="rounded-full bg-wine px-7 py-3 text-sm font-medium text-cream transition-colors hover:bg-wine-soft"
+            className="group inline-flex items-center justify-center gap-3 rounded-full bg-[#650D16] px-10 py-4 text-base font-medium tracking-wide text-[#FFF8E9] transition-all hover:bg-[#800F19]"
           >
             Order something else
           </Link>
           <Link
             href="/"
-            className="rounded-full border border-wine/25 px-7 py-3 text-sm font-medium text-wine transition-colors hover:border-wine hover:bg-wine/5"
+            className="group inline-flex items-center justify-center gap-3 rounded-full border border-[#FFF8E9]/30 px-10 py-4 text-base font-medium tracking-wide text-[#650D16] transition-all hover:border-[#650D16] hover:bg-[#FFF8E9]/10"
           >
             Back home
           </Link>
@@ -244,17 +248,19 @@ export default function CheckoutForm({ razorpayEnabled }: Props) {
 
   if (items.length === 0) {
     return (
-      <div className="mx-auto flex max-w-xl flex-col items-center gap-4 px-4 py-24 text-center sm:px-6">
-        <span className="grid h-20 w-20 place-items-center rounded-full bg-cream-dark">
-          <ShoppingBag className="h-8 w-8 text-gold" />
+      <div className="mx-auto flex max-w-xl flex-col items-center gap-6 px-4 sm:px-6 py-28 text-center">
+        <span className="grid h-24 w-24 place-items-center rounded-full bg-[#F4EAD5]">
+          <ShoppingBag className="h-10 w-10 text-[#F5C84C]" />
         </span>
-        <h1 className="font-serif text-4xl text-wine">Your box is empty</h1>
-        <p className="max-w-sm text-sm leading-relaxed text-ink/65">
+        <h1 className="font-serif text-4xl text-[#650D16] sm:text-5xl">
+          Your box is empty
+        </h1>
+        <p className="mt-4 text-lg leading-relaxed text-[#351B19]/70 max-w-sm">
           There is nothing to check out yet — fill it with something handcrafted first.
         </p>
         <Link
           href="/sweets"
-          className="mt-2 rounded-full bg-wine px-7 py-3 text-sm font-medium text-cream transition-colors hover:bg-wine-soft"
+          className="group mt-2 inline-flex items-center justify-center gap-3 rounded-full bg-[#650D16] px-10 py-4 text-base font-medium tracking-wide text-[#FFF8E9] transition-all hover:bg-[#800F19]"
         >
           Browse Sweets
         </Link>
@@ -263,16 +269,20 @@ export default function CheckoutForm({ razorpayEnabled }: Props) {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
-      <h1 className="font-serif text-4xl text-wine sm:text-5xl">Checkout</h1>
-      <p className="mt-2 text-sm uppercase tracking-[0.2em] text-ink/50">
+    <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+      <h1 className="font-serif text-4xl text-[#650D16] sm:text-5xl">
+        Checkout
+      </h1>
+      <p className="mt-4 text-base uppercase tracking-[0.2em] text-[#351B19]/60 font-serif">
         {count} {count === 1 ? "item" : "items"} · thoughtfully prepared for you
       </p>
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
-        <form onSubmit={submit} className="rounded-2xl border border-wine/10 bg-white/50 p-6 sm:p-8">
-          <h2 className="text-[11px] uppercase tracking-[0.25em] text-ink/45">Deliver to</h2>
-          <div className="mt-5 grid gap-5 sm:grid-cols-2">
+      <div className="mt-12 grid gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-20">
+        <form onSubmit={submit} className="rounded-3xl border border-[#650D16]/20 bg-white p-8 sm:p-12 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)]">
+          <h2 className="text-[11px] uppercase tracking-[0.25em] text-[#351B19]/60 font-serif mb-6">
+            Deliver to
+          </h2>
+          <div className="grid gap-6 sm:grid-cols-2">
             <Field
               label="Full name"
               value={customer.name}
@@ -289,7 +299,7 @@ export default function CheckoutForm({ razorpayEnabled }: Props) {
               autoComplete="tel"
             />
           </div>
-          <div className="mt-5">
+          <div className="mt-6">
             <Field
               label="Email"
               type="email"
@@ -299,7 +309,7 @@ export default function CheckoutForm({ razorpayEnabled }: Props) {
               autoComplete="email"
             />
           </div>
-          <div className="mt-5">
+          <div className="mt-6">
             <Field
               label="Address"
               value={customer.address}
@@ -308,7 +318,7 @@ export default function CheckoutForm({ razorpayEnabled }: Props) {
               autoComplete="street-address"
             />
           </div>
-          <div className="mt-5 grid gap-5 sm:grid-cols-2">
+          <div className="grid gap-6 sm:grid-cols-2">
             <Field
               label="City"
               value={customer.city}
@@ -324,8 +334,8 @@ export default function CheckoutForm({ razorpayEnabled }: Props) {
               autoComplete="postal-code"
             />
           </div>
-          <label className="mt-5 block">
-            <span className="text-[11px] uppercase tracking-[0.2em] text-ink/50">
+          <label className="mt-6 block">
+            <span className="text-[11px] uppercase tracking-[0.2em] text-[#351B19]/60 font-serif">
               Delivery notes (optional)
             </span>
             <textarea
@@ -337,14 +347,14 @@ export default function CheckoutForm({ razorpayEnabled }: Props) {
             />
           </label>
 
-          <fieldset className="mt-8">
-            <legend className="text-[11px] uppercase tracking-[0.25em] text-ink/45">
+          <fieldset className="mt-10">
+            <legend className="text-[11px] uppercase tracking-[0.25em] text-[#351B19]/60 font-serif">
               How would you like to pay?
             </legend>
-            <div className="mt-4 space-y-3">
+            <div className="mt-6 space-y-4">
               <label
-                className={`flex cursor-pointer items-start gap-3 rounded-xl border p-4 transition-colors ${
-                  method === "cod" ? "border-gold bg-gold/5" : "border-wine/15 hover:border-wine/40"
+                className={`flex cursor-pointer items-start gap-4 rounded-2xl border p-6 transition-all duration-300 ${
+                  method === "cod" ? "border-[#F5C84C] bg-[#FFF8E9]/30 shadow-[0_4px_12px_-4px_rgba(245,200,76,0.1)]" : "border-[#650D16]/20 bg-white hover:border-[#650D16]/40 hover:shadow-sm"
                 }`}
               >
                 <input
@@ -352,20 +362,20 @@ export default function CheckoutForm({ razorpayEnabled }: Props) {
                   name="payment"
                   checked={method === "cod"}
                   onChange={() => setMethod("cod")}
-                  className="mt-1 accent-[#4c1019]"
+                  className="mt-1 accent-[#650D16]"
                 />
                 <span>
-                  <span className="block text-sm font-medium text-wine">Pay on Delivery</span>
-                  <span className="mt-0.5 block text-sm text-ink/60">
+                  <span className="block text-base font-medium text-[#650D16]">Pay on Delivery</span>
+                  <span className="mt-1 block text-base text-[#351B19]/60 leading-relaxed">
                     Cash or UPI when your box arrives.
                   </span>
                 </span>
               </label>
               <label
-                className={`flex cursor-pointer items-start gap-3 rounded-xl border p-4 transition-colors ${
+                className={`flex cursor-pointer items-start gap-4 rounded-2xl border p-6 transition-all duration-300 ${
                   method === "online"
-                    ? "border-gold bg-gold/5"
-                    : "border-wine/15 hover:border-wine/40"
+                    ? "border-[#F5C84C] bg-[#FFF8E9]/30 shadow-[0_4px_12px_-4px_rgba(245,200,76,0.1)]"
+                    : "border-[#650D16]/20 bg-white hover:border-[#650D16]/40 hover:shadow-sm"
                 }`}
               >
                 <input
@@ -373,14 +383,14 @@ export default function CheckoutForm({ razorpayEnabled }: Props) {
                   name="payment"
                   checked={method === "online"}
                   onChange={() => setMethod("online")}
-                  className="mt-1 accent-[#4c1019]"
+                  className="mt-1 accent-[#650D16]"
                 />
                 <span>
-                  <span className="flex items-center gap-2 text-sm font-medium text-wine">
+                  <span className="flex items-center gap-3 text-base font-medium text-[#650D16]">
                     {razorpayEnabled ? "Pay now" : "Pay now (test)"}
-                    <Lock className="h-3.5 w-3.5 text-gold" />
+                    <Lock className="h-5 w-5 text-[#F5C84C]" />
                   </span>
-                  <span className="mt-0.5 block text-sm text-ink/60">
+                  <span className="mt-1 block text-base text-[#351B19]/60 leading-relaxed">
                     {razorpayEnabled
                       ? "UPI, cards and netbanking — secured by Razorpay."
                       : "Simulated gateway for this demo — no money moves. Add Razorpay keys to go live."}
@@ -391,7 +401,7 @@ export default function CheckoutForm({ razorpayEnabled }: Props) {
           </fieldset>
 
           {error && (
-            <p role="alert" className="mt-5 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">
+            <p role="alert" className="mt-8 rounded-xl border border-[#F5C84C]/30 bg-[#FFF8E9]/30 px-4 py-3 text-base text-[#3D080F]/80">
               {error}
             </p>
           )}
@@ -399,49 +409,51 @@ export default function CheckoutForm({ razorpayEnabled }: Props) {
           <button
             type="submit"
             disabled={busy}
-            className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-wine py-4 text-sm font-medium tracking-wide text-cream transition-colors hover:bg-wine-soft disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-10"
+            className="mt-10 flex w-full items-center justify-center gap-3 rounded-full bg-[#650D16] py-5 text-base font-medium tracking-wide text-[#FFF8E9] transition-all hover:bg-[#800F19] hover:-translate-y-1 shadow-[0_10px_25px_-10px_rgba(101,13,22,0.3)] sm:w-auto sm:px-12"
           >
-            {busy && <Loader2 className="h-4 w-4 animate-spin" />}
+            {busy && <Loader2 className="h-5 w-5 animate-spin" />}
             {method === "cod" ? `Place Order · ${inr(total)}` : `Pay ${inr(total)}`}
           </button>
-          <p className="mt-4 text-xs text-ink/45">
+          <p className="mt-6 text-base text-[#351B19]/60 font-serif">
             By placing this order you agree to our thoughtful preparation policy.
           </p>
         </form>
 
-        <aside className="h-fit rounded-2xl border border-wine/10 bg-cream-dark/60 p-6 sm:p-8 lg:sticky lg:top-28">
-          <h2 className="text-[11px] uppercase tracking-[0.25em] text-ink/45">Your box</h2>
-          <ul className="mt-5 divide-y divide-wine/10">
+        <aside className="h-fit rounded-3xl border border-[#650D16]/20 bg-white p-8 sm:p-10 lg:sticky lg:top-28 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)]">
+          <h2 className="text-[11px] uppercase tracking-[0.25em] text-[#351B19]/60 font-serif mb-6">
+            Your box
+          </h2>
+          <ul className="mt-4 divide-y divide-[#650D16]/20">
             {items.map((item) => (
-              <li key={item.slug} className="flex items-start justify-between gap-4 py-4">
+              <li key={item.slug} className="flex items-start justify-between gap-5 py-5">
                 <span>
-                  <span className="block font-serif text-lg leading-tight text-wine">
+                  <span className="block font-serif text-lg leading-tight text-[#650D16]">
                     {item.name}
                   </span>
-                  <span className="mt-0.5 block text-xs text-ink/50">
+                  <span className="mt-1 block text-base text-[#351B19]/50 leading-relaxed">
                     {item.unit} · Qty {item.qty}
                   </span>
                 </span>
-                <span className="shrink-0 text-sm text-wine">{inr(item.price * item.qty)}</span>
+                <span className="shrink-0 text-base text-[#650D16]">{inr(item.price * item.qty)}</span>
               </li>
             ))}
           </ul>
-          <dl className="mt-5 space-y-2 border-t border-wine/10 pt-5 text-sm">
-            <div className="flex justify-between text-ink/70">
+          <dl className="mt-6 space-y-2 border-t border-[#650D16]/20 pt-6 text-base">
+            <div className="flex justify-between text-[#351B19]/70">
               <dt>Subtotal</dt>
               <dd>{inr(subtotal)}</dd>
             </div>
-            <div className="flex justify-between text-ink/70">
+            <div className="flex justify-between text-[#351B19]/70">
               <dt>Delivery</dt>
               <dd>{delivery === 0 ? "Free" : inr(delivery)}</dd>
             </div>
-            <div className="flex justify-between border-t border-wine/10 pt-2 font-serif text-xl text-wine">
+            <div className="flex justify-between border-t border-[#650D16]/20 pt-3 font-serif text-xl text-[#650D16]">
               <dt>Total</dt>
               <dd>{inr(total)}</dd>
             </div>
           </dl>
           {delivery > 0 && (
-            <p className="mt-4 text-xs text-ink/55">
+            <p className="mt-6 text-base text-[#351B19]/60 leading-relaxed">
               Add {inr(FREE_DELIVERY_OVER - subtotal)} more and delivery is on us.
             </p>
           )}
@@ -450,7 +462,7 @@ export default function CheckoutForm({ razorpayEnabled }: Props) {
 
       {sheet && (
         <div
-          className="fixed inset-0 z-[80] grid place-items-center bg-wine-dark/60 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[80] grid place-items-center bg-[#3D080F]/70 p-4 sm:p-6 backdrop-blur-sm"
           onClick={() => setSheet(null)}
         >
           <div
@@ -458,36 +470,40 @@ export default function CheckoutForm({ razorpayEnabled }: Props) {
             aria-modal="true"
             aria-label="Test payment"
             onClick={(event) => event.stopPropagation()}
-            className="w-full max-w-sm rounded-2xl border border-gold/40 bg-cream p-6 shadow-2xl"
+            className="w-full max-w-sm rounded-3xl border border-[#F5C84C]/40 bg-[#FFF8E9] p-8 sm:p-10 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.3)]"
           >
             <div className="flex items-center justify-between">
-              <span className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-ink/50">
-                <Lock className="h-3.5 w-3.5 text-gold" /> Test payment
+              <span className="flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-[#351B19]/60 font-serif">
+                <Lock className="h-4 w-4 text-[#F5C84C]" /> Test payment
               </span>
-              <span className="rounded-full bg-gold/15 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-gold">
+              <span className="rounded-full bg-[#F5C84C]/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-[#F5C84C]">
                 Sandbox
               </span>
             </div>
-            <p className="mt-5 font-serif text-3xl text-wine">{inr(sheet.amount / 100)}</p>
-            <p className="mt-1 text-sm text-ink/60">Meetha Kissa · ref {sheet.orderId}</p>
-            <div className="mt-5 rounded-xl border border-wine/15 bg-white/60 px-4 py-3 text-sm text-ink/70">
+            <p className="mt-6 font-serif text-3xl text-[#650D16]">
+              {inr(sheet.amount / 100)}
+            </p>
+            <p className="mt-2 text-base text-[#351B19]/60 leading-relaxed">
+              Meetha Kissa · ref {sheet.orderId}
+            </p>
+            <div className="mt-6 rounded-xl border border-[#650D16]/20 bg-[#FFF8E9]/60 px-4 py-3 text-base text-[#351B19]/70">
               Test card · 4111 1111 1111 1111
-              <span className="mt-1 block text-xs text-ink/45">
+              <span className="mt-1 block text-[10px] text-[#351B19]/50">
                 This gateway is a simulation — no money moves.
               </span>
             </div>
-            <div className="mt-6 flex gap-3">
+            <div className="mt-8 flex gap-4">
               <button
                 type="button"
                 onClick={() => pay(sheet)}
-                className="flex-1 rounded-full bg-wine py-3.5 text-sm font-medium text-cream transition-colors hover:bg-wine-soft"
+                className="flex-1 rounded-full bg-[#650D16] py-4 text-base font-medium text-[#FFF8E9] transition-all hover:bg-[#800F19]"
               >
                 Pay {inr(sheet.amount / 100)}
               </button>
               <button
                 type="button"
                 onClick={() => setSheet(null)}
-                className="rounded-full border border-wine/25 px-6 text-sm font-medium text-wine transition-colors hover:bg-wine/5"
+                className="rounded-full border border-[#650D16]/30 px-6 text-base font-medium text-[#650D16] transition-all hover:bg-[#FFF8E9]/50"
               >
                 Cancel
               </button>

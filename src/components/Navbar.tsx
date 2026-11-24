@@ -38,13 +38,13 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="bg-wine text-cream/90">
-        <div className="mx-auto flex max-w-7xl items-center justify-center gap-3 px-4 py-2 text-center text-[11px] tracking-[0.18em] uppercase">
+      <div className="bg-[#3D080F] text-cream/90">
+        <div className="mx-auto flex max-w-7xl items-center justify-center gap-3 px-4 py-2 text-center text-[11px] tracking-[0.18em] uppercase font-serif">
           <span className="hidden sm:inline">Handmade fresh every morning</span>
-          <span className="hidden sm:inline text-gold-light">·</span>
-          <span>Free delivery over ₹999</span>
-          <span className="text-gold-light">·</span>
-          <a href="tel:8168009506" className="flex items-center gap-1.5 hover:text-gold-light">
+          <span className="hidden sm:inline text-[#F5C84C]">·</span>
+          <span className="text-[#C49A3A]">Free delivery over ₹999</span>
+          <span className="text-[#C49A3A]">·</span>
+          <a href="tel:8168009506" className="flex items-center gap-1.5 hover:text-[#F5C84C]">
             <Phone className="h-3 w-3" />
             8168009506
           </a>
@@ -54,26 +54,26 @@ export default function Navbar() {
       <header
         className={`sticky top-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "border-b border-wine/10 bg-cream/85 shadow-[0_8px_30px_rgba(76,16,25,0.06)] backdrop-blur-xl"
-            : "border-b border-transparent bg-cream"
+            ? "border-b border-[#650D16]/20 bg-[#FFF8E9]/90 shadow-[0_8px_30px_rgba(61,8,15,0.12)] backdrop-blur-xl"
+            : "border-b transparent bg-[#FFF8E9]/95 backdrop-blur-md"
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
           <Link href="/" className="group flex items-center gap-3">
-            <span className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full border border-gold/40 bg-cream-dark ring-1 ring-gold/20 transition-transform duration-500 group-hover:scale-105">
+            <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full border border-[#C49A3A]/40 bg-[#F4EAD5] ring-1 ring-[#C49A3A]/20 transition-transform duration-500 group-hover:scale-105">
               <Image
                 src="/logo-mark.png"
                 alt="Meetha Kissa emblem"
                 fill
-                sizes="44px"
+                sizes="48px"
                 className="object-cover"
               />
             </span>
             <span className="flex flex-col leading-none">
-              <span className="font-serif text-xl font-semibold tracking-wide text-wine sm:text-2xl">
+              <span className="font-serif text-xl font-semibold tracking-wide text-[#650D16] sm:text-2xl">
                 Meetha Kissa
               </span>
-              <span className="mt-1 hidden font-serif text-[11px] italic tracking-[0.2em] text-gold sm:block">
+              <span className="mt-1 hidden font-serif text-[11px] italic tracking-[0.2em] text-[#C49A3A] sm:block">
                 maa se pyar se
               </span>
             </span>
@@ -89,13 +89,13 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative text-sm font-medium tracking-wide transition-colors ${
-                    active ? "text-wine" : "text-ink/70 hover:text-wine"
+                  className={`relative text-sm font-medium tracking-wider transition-all ${
+                    active ? "text-[#650D16]" : "text-[#351B19]/70 hover:text-[#650D16]"
                   }`}
                 >
                   {link.label}
                   <span
-                    className={`absolute -bottom-1.5 left-0 h-px bg-gold transition-all duration-300 ${
+                    className={`absolute -bottom-1.5 left-0 h-px bg-[#C49A3A] transition-all duration-300 ${
                       active ? "w-full" : "w-0"
                     }`}
                   />
@@ -109,7 +109,7 @@ export default function Navbar() {
               type="button"
               onClick={openSearch}
               aria-label="Search sweets"
-              className="grid h-10 w-10 place-items-center rounded-full text-wine transition-colors hover:bg-wine/5"
+              className="grid h-11 w-11 place-items-center rounded-full text-[#650D16] transition-all hover:bg-[#650D16]/10"
             >
               <Search className="h-[18px] w-[18px]" />
             </button>
@@ -117,7 +117,7 @@ export default function Navbar() {
               type="button"
               onClick={openCart}
               aria-label={`Open sweet box, ${count} items`}
-              className="relative grid h-10 w-10 place-items-center rounded-full text-wine transition-colors hover:bg-wine/5"
+              className="relative grid h-11 w-11 place-items-center rounded-full text-[#650D16] transition-all hover:bg-[#650D16]/10"
             >
               <ShoppingBag className="h-[18px] w-[18px]" />
               <AnimatePresence>
@@ -127,7 +127,7 @@ export default function Navbar() {
                     initial={{ scale: 0.4, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     exit={{ scale: 0.4, opacity: 0 }}
-                    className="absolute -right-0.5 -top-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-gold px-1 text-[10px] font-semibold text-wine-dark"
+                    className="absolute -right-0.5 -top-0.5 grid h-6 min-w-6 place-items-center rounded-full bg-[#F5C84C] px-1 text-[10px] font-semibold text-[#3D080F]"
                   >
                     {count}
                   </motion.span>
@@ -138,7 +138,7 @@ export default function Navbar() {
               type="button"
               onClick={() => setMenuOpen(true)}
               aria-label="Open menu"
-              className="grid h-10 w-10 place-items-center rounded-full text-wine transition-colors hover:bg-wine/5 md:hidden"
+              className="grid h-11 w-11 place-items-center rounded-full text-[#650D16] transition-all hover:bg-[#650D16]/10 md:hidden"
             >
               <Menu className="h-5 w-5" />
             </button>
@@ -155,7 +155,7 @@ export default function Navbar() {
             exit={{ opacity: 0 }}
           >
             <div
-              className="absolute inset-0 bg-wine-dark/50 backdrop-blur-sm"
+              className="absolute inset-0 bg-[#3D080F]/70 backdrop-blur-sm"
               onClick={() => setMenuOpen(false)}
             />
             <motion.aside
@@ -163,15 +163,15 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 260 }}
-              className="absolute inset-y-0 right-0 flex w-[85%] max-w-sm flex-col bg-cream shadow-2xl"
+              className="absolute inset-y-0 right-0 flex w-[85%] max-w-sm flex-col bg-[#FFF8E9] shadow-[0_20px_60px_-20px_rgba(61,8,15,0.4)]"
             >
-              <div className="flex items-center justify-between border-b border-wine/10 px-6 py-5">
-                <span className="font-serif text-xl text-wine">Menu</span>
+              <div className="flex items-center justify-between border-b border-[#650D16]/20 px-6 py-5">
+                <span className="font-serif text-xl text-[#650D16]">Menu</span>
                 <button
                   type="button"
                   onClick={() => setMenuOpen(false)}
                   aria-label="Close menu"
-                  className="grid h-10 w-10 place-items-center rounded-full text-wine hover:bg-wine/5"
+                  className="grid h-10 w-10 place-items-center rounded-full text-[#650D16] transition-all hover:bg-[#650D16]/10"
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -187,15 +187,15 @@ export default function Navbar() {
                     <Link
                       href={link.href}
                       onClick={() => setMenuOpen(false)}
-                      className="block border-b border-wine/5 py-4 font-serif text-3xl text-wine"
+                      className="block border-b border-[#650D16]/10 py-4 font-serif text-3xl text-[#650D16]"
                     >
                       {link.label}
                     </Link>
                   </motion.div>
                 ))}
               </nav>
-              <div className="mt-auto border-t border-wine/10 px-6 py-6 text-sm text-ink/70">
-                <p className="font-serif text-lg text-wine">Meetha Kissa</p>
+              <div className="mt-auto border-t border-[#650D16]/10 px-6 py-6 text-sm text-[#351B19]/70">
+                <p className="font-serif text-lg text-[#650D16]">Meetha Kissa</p>
                 <p className="mt-2">
                   Bapoli, Panipat, Haryana – 132104, India
                 </p>

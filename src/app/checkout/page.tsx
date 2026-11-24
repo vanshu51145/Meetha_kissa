@@ -13,5 +13,9 @@ export default function CheckoutPage() {
     process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET,
   );
 
-  return <CheckoutForm razorpayEnabled={razorpayEnabled} />;
+  return (
+    <section className="bg-[#F4EAD5]/30 py-20 sm:py-28">
+      <CheckoutForm razorpayEnabled={razorpayEnabled} />
+    </section>
+  );
 }
