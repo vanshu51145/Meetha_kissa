@@ -73,7 +73,7 @@ export default function ContactForm() {
             required
             value={form.name}
             onChange={(event) => update("name", event.target.value)}
-            placeholder="Priya Sharma"
+            placeholder="Your name"
             className="mt-2 w-full rounded-xl border border-wine/15 bg-cream px-4 py-3 text-sm text-wine placeholder:text-ink/30 focus:border-gold focus:outline-none"
           />
         </label>

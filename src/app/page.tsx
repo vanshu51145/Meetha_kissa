@@ -3,7 +3,6 @@ import Image from "next/image";
 import { ArrowRight, Gift, Leaf, ScrollText, Sparkles, Star } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
 import Reveal from "@/components/Reveal";
-import Testimonials from "@/components/Testimonials";
 import { categories, featuredProducts, products } from "@/lib/products";
 
 const trust = [
@@ -24,16 +23,16 @@ const reasons = [
     title: "Pure Ingredients",
     text: "Pure ghee, full-fat milk, real saffron and hand-picked dry fruits. No preservatives, ever.",
   },
-  {
-    icon: ScrollText,
-    title: "Family Recipes",
-    text: "Time-tested recipes from our first kitchen in 1998, followed to the gram.",
-  },
-  {
-    icon: Gift,
-    title: "Beautifully Packed",
-    text: "Hand-finished boxes, satin ribbons and handwritten notes — made for gifting.",
-  },
+      {
+        icon: ScrollText,
+        title: "Traditional Craftsmanship",
+        text: "Every sweet is thoughtfully prepared with attention to detail, flavour and quality.",
+      },
+      {
+        icon: Gift,
+        title: "Elegantly Presented",
+        text: "Beautifully curated boxes, refined details and thoughtful presentation for every special occasion.",
+      },
 ];
 
 export default function Home() {
@@ -49,7 +48,7 @@ export default function Home() {
           <Reveal>
             <p className="flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] text-gold">
               <span className="h-px w-10 bg-gold/50" />
-              Handcrafted mithai · Since 1998
+              Handcrafted mithai · Timeless
             </p>
             <h1 className="mt-6 font-serif text-5xl leading-[1.05] text-wine sm:text-6xl lg:text-7xl">
               Sweet Traditions,
@@ -57,8 +56,8 @@ export default function Home() {
               Made <span className="italic text-gold">Timeless</span>.
             </h1>
             <p className="mt-7 max-w-xl text-lg leading-relaxed text-ink/70">
-              Handcrafted Indian sweets made with the finest ingredients,
-              cherished recipes, and a whole lot of love.
+              Handcrafted Indian mithai, prepared in small batches with pure
+              ghee, traditional techniques, and meticulous attention to detail.
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <Link
@@ -82,7 +81,7 @@ export default function Home() {
                     <Star key={index} className="h-3.5 w-3.5 fill-current" />
                   ))}
                 </span>
-                4.9 / 5 from 2,400+ families
+                4.9 / 5
               </span>
               <span className="hidden h-4 w-px bg-wine/15 sm:block" />
               <span>Fresh batches made daily</span>
@@ -269,7 +268,7 @@ export default function Home() {
             Why Meetha Kissa
           </p>
           <h2 className="mt-4 font-serif text-4xl text-wine sm:text-5xl">
-            Four promises we never break
+            Four promises we keep
           </h2>
         </Reveal>
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -295,38 +294,39 @@ export default function Home() {
           <Reveal className="relative">
             <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-gold/30 shadow-[0_40px_80px_-45px_rgba(76,16,25,0.6)]">
               <Image
-                src="/home-halwai.jpg"
-                alt="A halwai frying fresh boondi in a large kadhai, the traditional way"
+                src="/images/mithai-preparation.jpg"
+                alt="Traditional Indian mithai preparation, hands shaping homemade sweets"
                 fill
                 sizes="(max-width: 1024px) 100vw, 560px"
                 className="object-cover"
               />
             </div>
-            <div className="absolute -bottom-6 -right-2 grid h-28 w-28 place-items-center rounded-full border border-gold/40 bg-cream text-center shadow-xl sm:-right-8 sm:h-32 sm:w-32">
-              <span className="font-serif text-[11px] uppercase tracking-[0.2em] text-gold">
-                Since
-                <br />
-                <span className="text-3xl text-wine">1998</span>
-              </span>
-            </div>
+
           </Reveal>
           <Reveal delay={0.12}>
             <p className="text-[11px] uppercase tracking-[0.3em] text-gold">
               Our story
             </p>
             <h2 className="mt-4 font-serif text-4xl leading-tight text-wine sm:text-5xl">
-              A Story That Began With One Recipe.
+              A Sweet Idea That Started at Home.
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-ink/70">
-              Meetha Kissa began with a simple belief — that sweets are more
-              than food. They are memories, celebrations and a way of bringing
-              people together.
+              Every great idea begins with a small thought. Meetha Kissa started
+              with a simple passion for making sweets at home.
             </p>
             <p className="mt-4 leading-relaxed text-ink/65">
-              It started at a single counter in Rajouri Garden, where our
-              grandmother&apos;s besan ladoo sold out before noon. Three
-              generations later we still roast besan the way she did: slowly,
-              in pure ghee, without shortcuts.
+              The idea of introducing homemade sweets in college came from
+              noticing an opportunity where there was little competition and a
+              chance to offer something different.
+            </p>
+            <p className="mt-4 leading-relaxed text-ink/65">
+              One small idea turned into a journey of creativity, learning and
+              entrepreneurship.
+            </p>
+            <p className="mt-4 leading-relaxed text-ink/65">
+              Today, Meetha Kissa represents our love for traditional Indian
+              sweets, thoughtful preparation and the courage to turn a simple
+              idea into something meaningful.
             </p>
             <Link
               href="/about"
@@ -339,24 +339,64 @@ export default function Home() {
         </div>
       </section>
 
-      <Testimonials />
+      {/* BRAND HIGHLIGHTS */}
+      <section className="border-y border-wine/10 bg-cream-dark/50 py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Reveal className="text-center">
+            <p className="text-[11px] uppercase tracking-[0.3em] text-gold">
+              Meetha Kissa
+            </p>
+            <h2 className="mt-4 font-serif text-4xl text-wine sm:text-5xl">
+              Made with Care, Shared with Love
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-ink/70">
+              Every sweet has a story of tradition, flavour and thoughtful
+              preparation. At Meetha Kissa, we bring you delightful Indian
+              sweets made to make your special moments sweeter.
+            </p>
+          </Reveal>
+          <div className="mt-16 grid gap-6 sm:grid-cols-3">
+            {[
+              {
+                title: "Traditional Indian Flavours",
+                text: "Authentic recipes and real ingredients that capture the essence of Indian mithai.",
+              },
+              {
+                title: "Thoughtful Preparation",
+                text: "Each sweet is carefully prepared with attention to detail and quality.",
+              },
+              {
+                title: "Beautifully Presented",
+                text: "Thoughtfully arranged and presented for every special occasion.",
+              },
+            ].map(({ title, text }, index) => (
+              <Reveal key={title} delay={index * 0.08}>
+                <div className="h-full rounded-2xl border border-wine/10 bg-white/50 p-8 text-center">
+                  <h3 className="mt-6 font-serif text-xl text-wine">{title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-ink/65">{text}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* CTA */}
       <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
         <Reveal className="rounded-[2rem] border border-wine/10 bg-white/50 px-8 py-16 text-center">
           <h2 className="font-serif text-4xl text-wine sm:text-5xl">
-            Craving something sweet?
+            A Little Sweetness for Every Occasion
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-ink/65">
-            Order before 4 PM and your mithai is packed the same evening.
-            Free delivery across Delhi NCR on orders above ₹999.
+            Discover our collection of traditional Indian sweets, thoughtfully
+            prepared and beautifully presented for your special moments.
           </p>
           <Link
             href="/sweets"
             className="mt-8 inline-flex items-center gap-2 rounded-full bg-wine px-9 py-4 text-sm font-medium tracking-wide text-cream transition-colors hover:bg-wine-soft"
           >
-            Order Now
-            <ArrowRight className="h-4 w-4" />
+            Explore Our Sweets
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </Reveal>
       </section>

@@ -40,7 +40,7 @@ export async function sendMessage(input: {
     console.error("sendMessage failed", error);
     return {
       ok: false,
-      error: "We couldn't save your message — please email hello@meethakissa.in instead.",
+      error: "We couldn't save your message — please email vanshu51165@gmail.com instead.",
     };
   }
   return { ok: true };

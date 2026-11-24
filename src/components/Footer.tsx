@@ -44,12 +44,11 @@ export default function Footer() {
               </span>
             </div>
             <p className="mt-6 max-w-xs text-sm leading-relaxed">
-              Handcrafted Indian mithai, made in small batches with pure ghee
-              and recipes passed down since 1998.
+              Meetha Kissa brings traditional Indian sweets closer to your
+              celebrations with thoughtful preparation, delightful flavours and
+              a love for mithai.
             </p>
-            <p className="mt-6 font-serif text-sm tracking-[0.25em] text-gold-light">
-              SINCE 1998
-            </p>
+
           </div>
 
           <div>
@@ -78,24 +77,22 @@ export default function Footer() {
               <li className="flex gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold-light" />
                 <span>
-                  Shop 4, Amrit Market
-                  <br />
-                  Rajouri Garden, New Delhi 110027
+                  Bapoli, Panipat, Haryana – 132104, India
                 </span>
               </li>
               <li className="flex gap-3">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-gold-light" />
-                <a href="tel:+919810012345" className="hover:text-cream">
-                  +91 98100 12345
+                <a href="tel:8168009506" className="hover:text-cream">
+                  8168009506
                 </a>
               </li>
               <li className="flex gap-3">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-gold-light" />
                 <a
-                  href="mailto:hello@meethakissa.in"
+                  href="mailto:vanshu51165@gmail.com"
                   className="hover:text-cream"
                 >
-                  hello@meethakissa.in
+                  vanshu51165@gmail.com
                 </a>
               </li>
             </ul>
@@ -169,7 +166,6 @@ export default function Footer() {
 
         <div className="mt-14 flex flex-col items-center justify-between gap-3 border-t border-cream/10 pt-6 text-xs text-cream/65 sm:flex-row">
           <p>© 2026 Meetha Kissa. Crafted with love.</p>
-          <p>Fictional brand · Demo website for presentation purposes</p>
         </div>
       </div>
     </footer>

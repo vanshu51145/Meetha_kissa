@@ -215,7 +215,7 @@ export default function CheckoutForm({ razorpayEnabled }: Props) {
         <p className="text-sm leading-relaxed text-ink/65">
           Order <span className="font-medium text-wine">{placed.id}</span> is confirmed for{" "}
           {customer.name.split(" ")[0] || "you"} — {inr(placed.total)}. We&apos;ll call{" "}
-          {customer.phone} to fix the delivery slot, and it reaches you within 24 hours in Delhi NCR.
+          {customer.phone}.
         </p>
         <p className="text-sm text-ink/60">
           {placed.method === "cod"
@@ -266,7 +266,7 @@ export default function CheckoutForm({ razorpayEnabled }: Props) {
     <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
       <h1 className="font-serif text-4xl text-wine sm:text-5xl">Checkout</h1>
       <p className="mt-2 text-sm uppercase tracking-[0.2em] text-ink/50">
-        {count} {count === 1 ? "item" : "items"} · delivered within 24 hours in Delhi NCR
+        {count} {count === 1 ? "item" : "items"} · thoughtfully prepared for you
       </p>
 
       <div className="mt-10 grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
@@ -277,7 +277,7 @@ export default function CheckoutForm({ razorpayEnabled }: Props) {
               label="Full name"
               value={customer.name}
               onChange={(value) => update("name", value)}
-              placeholder="Priya Sharma"
+              placeholder="Your name"
               autoComplete="name"
             />
             <Field
@@ -405,7 +405,7 @@ export default function CheckoutForm({ razorpayEnabled }: Props) {
             {method === "cod" ? `Place Order · ${inr(total)}` : `Pay ${inr(total)}`}
           </button>
           <p className="mt-4 text-xs text-ink/45">
-            By placing this order you agree to our fresh-made, same-day dispatch policy.
+            By placing this order you agree to our thoughtful preparation policy.
           </p>
         </form>
 

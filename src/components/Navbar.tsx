@@ -44,9 +44,9 @@ export default function Navbar() {
           <span className="hidden sm:inline text-gold-light">·</span>
           <span>Free delivery over ₹999</span>
           <span className="text-gold-light">·</span>
-          <a href="tel:+919810012345" className="flex items-center gap-1.5 hover:text-gold-light">
+          <a href="tel:8168009506" className="flex items-center gap-1.5 hover:text-gold-light">
             <Phone className="h-3 w-3" />
-            +91 98100 12345
+            8168009506
           </a>
         </div>
       </div>
@@ -195,11 +195,9 @@ export default function Navbar() {
                 ))}
               </nav>
               <div className="mt-auto border-t border-wine/10 px-6 py-6 text-sm text-ink/70">
-                <p className="font-serif text-lg text-wine">maa se pyar se</p>
+                <p className="font-serif text-lg text-wine">Meetha Kissa</p>
                 <p className="mt-2">
-                  Amrit Market, Rajouri Garden
-                  <br />
-                  New Delhi 110027
+                  Bapoli, Panipat, Haryana – 132104, India
                 </p>
               </div>
             </motion.aside>

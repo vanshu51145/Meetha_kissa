@@ -4,7 +4,7 @@ import CheckoutForm from "@/components/CheckoutForm";
 export const metadata: Metadata = {
   title: "Checkout",
   description:
-    "Complete your order of handcrafted mithai — pay on delivery or online, delivered fresh across Delhi NCR.",
+    "Complete your order of handcrafted mithai — pay on delivery or online, thoughtfully prepared for you.",
   robots: { index: false },
 };
 

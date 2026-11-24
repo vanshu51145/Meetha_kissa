@@ -10,7 +10,7 @@ export const categories: Category[] = [
   { slug: "barfi", name: "Barfi", hint: "Festive classics" },
   { slug: "ladoo", name: "Ladoo", hint: "Melt-in-mouth rounds" },
   { slug: "bengali", name: "Bengali Sweets", hint: "Soft chenna magic" },
-  { slug: "traditional", name: "Traditional", hint: "Recipes from 1998" },
+  { slug: "traditional", name: "Traditional", hint: "Timeless classics" },
   { slug: "gift-boxes", name: "Gift Boxes", hint: "Made for gifting" },
 ];
 
@@ -100,7 +100,7 @@ export const products: Product[] = [
     name: "Besan Ladoo",
     tagline: "Roasted gram flour, ghee and cardamom blended into traditional ladoos.",
     description:
-      "The slowest sweet we make. Besan is roasted in pure ghee for over an hour until it turns the colour of sandalwood and smells of toasted nuts, then cooled, sweetened and shaped by hand. Our recipe hasn't changed since 1998.",
+      "The slowest sweet we make. Besan is roasted in pure ghee for over an hour until it turns the colour of sandalwood and smells of toasted nuts, then cooled, sweetened and shaped by hand. Our recipe remains unchanged.",
     price: 400,
     unit: "500g",
     image: "/products/besan-ladoo.jpg",

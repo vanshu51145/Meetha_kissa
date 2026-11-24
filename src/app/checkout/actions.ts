@@ -161,8 +161,8 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
       ok: false,
       error:
         payment.method === "razorpay"
-          ? "Your payment went through but we couldn't save the order — please call +91 98100 12345 so we can pack it by hand."
-          : "We couldn't save your order — please try again, or call +91 98100 12345.",
+          ? "Your payment went through but we couldn't save the order — please call 8168009506 so we can pack it by hand."
+          : "We couldn't save your order — please try again, or call 8168009506.",
     };
   }
 

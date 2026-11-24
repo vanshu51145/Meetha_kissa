@@ -182,7 +182,7 @@ export default function CartDrawer() {
                     Proceed to Checkout
                   </Link>
                   <p className="mt-3 text-center text-[11px] uppercase tracking-[0.18em] text-ink/60">
-                    Freshly packed · Delivered within 24 hours in Delhi NCR
+                    Freshly packed · Thoughtfully prepared for you
                   </p>
                 </div>
               </>

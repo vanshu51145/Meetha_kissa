@@ -7,31 +7,31 @@ import Reveal from "@/components/Reveal";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Visit the Meetha Kissa shop in Rajouri Garden, call us or write for festive pre-orders and gifting enquiries.",
+    "Visit Meetha Kissa, call us or write for festive pre-orders and gifting enquiries.",
 };
 
 const details = [
-  {
-    icon: MapPin,
-    label: "The shop",
-    lines: ["Shop 4, Amrit Market", "Rajouri Garden, New Delhi 110027"],
-    href: "https://maps.google.com/?q=Rajouri+Garden+New+Delhi",
-    linkText: "Get directions",
-  },
-  {
-    icon: Phone,
-    label: "Call or WhatsApp",
-    lines: ["+91 98100 12345"],
-    href: "tel:+919810012345",
-    linkText: "Tap to call",
-  },
-  {
-    icon: Mail,
-    label: "Email",
-    lines: ["hello@meethakissa.in", "orders@meethakissa.in"],
-    href: "mailto:hello@meethakissa.in",
-    linkText: "Write to us",
-  },
+    {
+      icon: MapPin,
+      label: "The shop",
+      lines: ["Bapoli, Panipat, Haryana – 132104, India"],
+      href: "https://maps.google.com/?q=Bapoli+Panipat+Haryana",
+      linkText: "Get directions",
+    },
+    {
+      icon: Phone,
+      label: "Call or WhatsApp",
+      lines: ["8168009506"],
+      href: "tel:8168009506",
+      linkText: "Tap to call",
+    },
+    {
+      icon: Mail,
+      label: "Email",
+      lines: ["vanshu51165@gmail.com"],
+      href: "mailto:vanshu51165@gmail.com",
+      linkText: "Write to us",
+    },
   {
     icon: Clock,
     label: "Shop hours",

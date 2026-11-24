@@ -1,6 +1,6 @@
 # Meetha Kissa
 
-Storefront for a Delhi NCR mithai shop. Next.js 16 (App Router, Cache Components), Tailwind 4, React 19.
+Storefront for a Meetha Kissa mithai shop. Next.js 16 (App Router, Cache Components), Tailwind 4, React 19.
 
 ## Run it
 
@@ -16,7 +16,7 @@ npm test           # node:test — catalogue + order store
 
 | Route | What it is |
 | --- | --- |
-| `/` | Home — hero, featured boxes, testimonials |
+| `/` | Home — hero, featured boxes, brand highlights |
 | `/sweets`, `/sweets/[slug]` | Catalogue and product pages (16 products, fully static) |
 | `/about`, `/contact` | Story and enquiry form |
 | `/checkout` | Address, order summary, Pay on Delivery / Razorpay |
